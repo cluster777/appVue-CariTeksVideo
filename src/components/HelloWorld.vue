@@ -79,7 +79,7 @@ export default {
       }
       else {
         this.message = 'ok'
-        axios.post('https://cari-teks-video-api.vercel.app/api/search', {
+        axios.post('http://localhost:80/api/search', {
           url: this.url,
           q: this.nonce,
           page: this.page,
