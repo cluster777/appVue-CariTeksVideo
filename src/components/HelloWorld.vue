@@ -79,7 +79,7 @@ export default {
       }
       else {
         this.message = 'ok'
-        axios.post('http://localhost:80/api/search', {
+        axios.post('https://localhost/api/search', {
           url: this.url,
           q: this.nonce,
           page: this.page,
