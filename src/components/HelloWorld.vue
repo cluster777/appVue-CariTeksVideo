@@ -1,13 +1,13 @@
 <template>
   <section class="hello">
     <div>
-      <h2>main feature</h2>
+      <h4>main feature</h4>
       disini input URL::<input v-model="url" placeholder="input html disini"><br>
       disini input kata kunci::<input v-model="nonce" placeholder="input kata kunci disini"><br>
       advanced::<input type=checkbox v-model="advanced" placeholder="on atau gak"><hr>
     </div>
     <div v-if="advanced">
-      <h2>Advanced feature</h2>
+      <h4>Advanced feature</h4>
       pada halaman ke::<input v-model="page" placeholder="input halaman disini"><br>
       jumlah data per listing::<input v-model="datasize" placeholder="input jumlah data tampil per halaman disini"><br>
       Marking::<input type=checkbox v-model="marked" placeholder="ditandai atau tidak">
@@ -17,15 +17,20 @@
     <article id=listing>
       <button v-on:click="getData">find!!!</button><br>
       <p v-if="message!='ok'">{{message}}</p>
-      <button v-if="itemList.first != null" v-on:click="getlisting(itemList.first)">First</button>
-      <button v-if="itemList.prev != null" v-on:click="getlisting(itemList.prev)">prev</button>
-      <button v-if="itemList.next != null" v-on:click="getlisting(itemList.next)">next</button>
-      <button v-if="itemList.last != null" v-on:click="getlisting(itemList.last)">last</button><br>
-      <ul>
-        <li v-for="data in itemList.data" :key="data.start">
-          {{data.start}}---{{data.end}}:::{{data.text}}<br>
-        </li>
-      </ul>
+      <table class=buttontable>
+      <tr>
+        <td><button v-if="itemList.first != null" v-on:click="getlisting(itemList.first)">First</button></td>
+        <td><button v-if="itemList.prev != null" v-on:click="getlisting(itemList.prev)">prev</button></td>
+        <td><button v-if="itemList.next != null" v-on:click="getlisting(itemList.next)">next</button></td>
+        <td><button v-if="itemList.last != null" v-on:click="getlisting(itemList.last)">last</button></td>
+      </tr>
+      </table>
+      <table class=datatable>
+        <tr><td>start</td><td>---</td><td>end</td><td>---</td><td>teks</td>
+        <tr v-for="data in itemList.data" :key="data.start">
+          <td>{{data.start}}</td><td>---</td><td>{{data.end}}</td><td>:::</td><td v-html="data.text">{{data.text}}</td>
+        </tr>
+      </table>
     </article>
   </section>
 </template>
@@ -119,6 +124,24 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+.buttontable {
+  white-space: nowrap;
+  margin-left:auto;
+  margin-right:auto;
+}
+.datatable {
+  border-collapse: collapse;
+  width: 100%;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
 a {
   color: #42b983;
 }
