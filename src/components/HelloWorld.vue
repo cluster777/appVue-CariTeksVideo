@@ -23,7 +23,7 @@
       <button v-if="itemList.last != null" v-on:click="getlisting(itemList.last)">last</button><br>
       <ul>
         <li v-for="data in itemList.data" :key="data.start">
-          {{data.start}}---{{data.end}}:::{{data.text}}
+          {{data.start}}---{{data.end}}:::{{data.text}}<br>
         </li>
       </ul>
     </article>
@@ -41,10 +41,12 @@ export default {
       nonce: '',
       page: 1,
       datasize: 10,
-      marked: true,
-      paginated: true,
+      marked: 1,
+      paginated: 1,
       advanced: false,
       message: 'ok',
+      paginatednum: 1,
+      markednum: 1,
       itemList: [
         {
           "data": [],
@@ -71,21 +73,27 @@ export default {
       if(!this.validURL(this.url)){
         this.message = 'invalid URL'
       } else if (this.nonce == '') {
-        this.message = 'kata kunci harus ada'
+        this.message = 'kata kunci harus ada minimal 3 huruf'
       } else if (isNaN(this.page)) {
         this.message = 'page harus berupa angka'
       } else if (isNaN(this.datasize)) {
         this.message = 'jumlah data harus berupa angka'
       }
       else {
+        if (this.paginated) this.paginatednum = 1
+        else this.paginatednum = 0
+        if (this.marked) this.markednum = 1
+        else this.markednum = 0
         this.message = 'ok'
-        axios.post('https://localhost/api/search', {
-          url: this.url,
-          q: this.nonce,
-          page: this.page,
-          size: this.datasize,
-          marked: this.marked,
-          paginated: this.paginated
+        axios.get('https://cari-teks-video-api.vercel.app/api/search', {
+          params: {
+            url: this.url,
+            q: this.nonce,
+            page: this.page,
+            size: this.datasize,
+            marked: this.markednum,
+            paginated: this.paginatednum
+          }
         }).then(response => {
           this.itemList = response.data
           console.log(this.itemList)
