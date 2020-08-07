@@ -140,8 +140,13 @@ th, td {
   text-align: left;
   padding: 8px;
 }
-
-tr:nth-child(even) {background-color: #f2f2f2;}
+.hello {
+  overflow: auto;
+  color: white;
+  background-color: #2e2b2b;
+  height: 80%;
+}
+tr:nth-child(even) {background-color: #525252;}
 a {
   color: #42b983;
 }
